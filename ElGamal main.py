@@ -27,21 +27,29 @@ def decrypt(private_key, p, c1, c2):
     m = (c2 * s_inv) % p
     return m
 
+def get_integer_input(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            return value
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
 # Example usage
 # Prime number and base generator
-p = 23
-g = 5
+p = get_integer_input("Enter a prime number (p): ")
+g = get_integer_input("Enter a base generator (g): ")
 
 # Generate keys
 public_key, private_key = generate_keys(p, g)
-print(f"Public Key: {public_key}")
-print(f"Private Key: {private_key}")
+print("Public Key: ",public_key)
+print("Private Key: ",private_key)
 
 # Encrypt message
-plaintext = 15
+plaintext = get_integer_input("Enter a plaintext message to encrypt ")
 ciphertext = encrypt(public_key, plaintext)
-print(f"Ciphertext: {ciphertext}")
+print("Ciphertext", ciphertext)
 
 # Decrypt message
 decrypted_message = decrypt(private_key, p, ciphertext[0], ciphertext[1])
-print(f"Decrypted Message: {decrypted_message}")
+print("Decrypted Message: ",decrypted_message)
