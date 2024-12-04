@@ -9,6 +9,14 @@ def mod_exp(base, exp, mod):
         exp = exp // 2
     return result
 
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
 def generate_keys(p, g):
     x = random.randint(1, p - 2)  # Private key
     h = mod_exp(g, x, p)  # Public key
@@ -35,9 +43,18 @@ def get_integer_input(prompt):
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
+def get_prime_input(prompt):
+    while True:
+        value = get_integer_input(prompt)
+        if is_prime(value):
+            return value
+        else:
+            print("The number entered is not prime. Please enter a prime number.")
+
+
 # Example usage
 # Prime number and base generator
-p = get_integer_input("Enter a prime number (p): ")
+p = get_prime_input("Enter a prime number (p): ")
 g = get_integer_input("Enter a base generator (g): ")
 
 # Generate keys
@@ -46,9 +63,13 @@ print("Public Key: ",public_key)
 print("Private Key: ",private_key)
 
 # Encrypt message
-plaintext = get_integer_input("Enter a plaintext message to encrypt ")
+plaintext = get_integer_input("Enter a plaintext message to encrypt (as an integer less than {}): ".format(p))
+while plaintext >= p:
+    print("The message must be less than the prime number {}.".format(p))
+    plaintext = get_integer_input("Enter a plaintext message to encrypt (as an integer less than {}): ".format(p))
+
 ciphertext = encrypt(public_key, plaintext)
-print("Ciphertext", ciphertext)
+print("Ciphertext: ", ciphertext)
 
 # Decrypt message
 decrypted_message = decrypt(private_key, p, ciphertext[0], ciphertext[1])
