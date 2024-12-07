@@ -70,6 +70,7 @@ while plaintext >= p:
 
 ciphertext = encrypt(public_key, plaintext)
 print("Ciphertext: ", ciphertext)
+print("Ciphertext c1 is {}, and c2 is {}".format(ciphertext[0],ciphertext[1]))
 
 # Decrypt message
 decrypted_message = decrypt(private_key, p, ciphertext[0], ciphertext[1])
