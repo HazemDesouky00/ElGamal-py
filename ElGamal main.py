@@ -1,27 +1,3 @@
-import random
-
-def mod_exp(base, exp, mod):
-    result = 1
-    while exp > 0:
-        if exp % 2 == 1:
-            result = (result * base) % mod
-        base = (base * base) % mod
-        exp = exp // 2
-    return result
-
-def is_prime(num):
-    if num <= 1:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
-
-def is_primitive_root(g, p):
-    required_set = set(num for num in range(1, p))
-    actual_set = set(pow(g, powers, p) for powers in range(1, p)) 
-    return required_set == actual_set
-
 #finding if a number is a primitive root using prime factors 
 # def prime_factors(n):
 #     factors = set()
@@ -41,7 +17,41 @@ def is_primitive_root(g, p):
 #     for factor in factors:
 #         if pow(g, phi // factor, p) == 1:
 #             return False
-#     return True
+#     return True 
+#instead of function in line 50
+
+
+import random
+
+def mod_exp(base, exp, mod):
+    result = 1
+    while exp > 0:
+        if exp % 2 == 1:
+            result = (result * base) % mod
+        base = (base * base) % mod
+        exp = exp // 2
+    return result
+
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def generate_prime(min_value=10000):
+    while True:
+        num = random.randint(min_value, min_value * 10)
+        if is_prime(num):
+            return num
+
+
+def is_primitive_root(g, p):
+    required_set = set(num for num in range(1, p))
+    actual_set = set(pow(g, powers, p) for powers in range(1, p)) 
+    return required_set == actual_set
+
 
 
 def generate_keys(p, g):
@@ -81,7 +91,10 @@ def get_prime_input(prompt):
 
 # Example
 # Prime number and base generator
-p = get_prime_input("Enter a prime number (p): ")
+# Generate a random prime number for p
+p = generate_prime()
+print("Generated prime number (p): ", p)
+
 g = get_integer_input("Enter a base generator (g): ")
 
 
