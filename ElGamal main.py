@@ -17,6 +17,33 @@ def is_prime(num):
             return False
     return True
 
+def is_primitive_root(g, p):
+    required_set = set(num for num in range(1, p))
+    actual_set = set(pow(g, powers, p) for powers in range(1, p)) 
+    return required_set == actual_set
+
+#finding if a number is a primitive root using prime factors 
+# def prime_factors(n):
+#     factors = set()
+#     for i in range(2, int(n ** 0.5) + 1):
+#         while n % i == 0:
+#             factors.add(i)
+#             n //= i
+#     if n > 1:
+#         factors.add(n)
+#     return factors
+
+# def is_primitive_root(g, p):
+#     if g <= 1:
+#         return False
+#     phi = p - 1  
+#     factors = prime_factors(phi)
+#     for factor in factors:
+#         if pow(g, phi // factor, p) == 1:
+#             return False
+#     return True
+
+
 def generate_keys(p, g):
     x = random.randint(1, p - 2)  # Private key
     h = mod_exp(g, x, p)  # Public key
@@ -52,10 +79,15 @@ def get_prime_input(prompt):
             print("The number entered is not prime. Please enter a prime number.")
 
 
-# Example usage
+# Example
 # Prime number and base generator
 p = get_prime_input("Enter a prime number (p): ")
 g = get_integer_input("Enter a base generator (g): ")
+
+
+while not is_primitive_root(g, p):
+     print("The base generator (g) is not a primitive root of the prime number (p). Please enter a valid primitive root.") 
+     g = get_integer_input("Enter a base generator (g): ")
 
 # Generate keys
 public_key, private_key = generate_keys(p, g)
