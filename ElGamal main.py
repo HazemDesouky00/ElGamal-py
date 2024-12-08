@@ -53,6 +53,12 @@ def is_primitive_root(g, p):
     return required_set == actual_set
 
 
+def find_primitive_root(p):
+    for g in range(2, p):
+        if is_primitive_root(g, p):
+            return g
+    raise ValueError("No primitive root found")
+
 
 def generate_keys(p, g):
     x = random.randint(1, p - 2)  # Private key
@@ -91,16 +97,20 @@ def get_prime_input(prompt):
 
 # Example
 # Prime number and base generator
+
 # Generate a random prime number for p
 p = generate_prime()
 print("Generated prime number (p): ", p)
 
-g = get_integer_input("Enter a base generator (g): ")
+# Generate a random base generator that is a primitive root
+g = find_primitive_root(p)
+print("Generated primitive root base generator (g): ", g)
 
 
-while not is_primitive_root(g, p):
-     print("The base generator (g) is not a primitive root of the prime number (p). Please enter a valid primitive root.") 
-     g = get_integer_input("Enter a base generator (g): ")
+
+# while not is_primitive_root(g, p):
+#      print("The base generator (g) is not a primitive root of the prime number (p). Please enter a valid primitive root.") 
+#      g = get_integer_input("Enter a base generator (g): ")
 
 # Generate keys
 public_key, private_key = generate_keys(p, g)
