@@ -86,13 +86,7 @@ def get_integer_input(prompt):
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
-def get_prime_input(prompt):
-    while True:
-        value = get_integer_input(prompt)
-        if is_prime(value):
-            return value
-        else:
-            print("The number entered is not prime. Please enter a prime number.")
+
 
 
 # Example
@@ -108,9 +102,7 @@ print("Generated primitive root base generator (g): ", g)
 
 
 
-# while not is_primitive_root(g, p):
-#      print("The base generator (g) is not a primitive root of the prime number (p). Please enter a valid primitive root.") 
-#      g = get_integer_input("Enter a base generator (g): ")
+
 
 # Generate keys
 public_key, private_key = generate_keys(p, g)
